@@ -1,4 +1,4 @@
-module github.com/RafaelFleitas/API-Golang.git
+module github.com/RafaelFleitas/API-Golang
 
 go 1.26.4
 
