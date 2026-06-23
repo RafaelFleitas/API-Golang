@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/RafaelFleitas/API-Golang/src/configuration/logger"
 	"github.com/RafaelFleitas/API-Golang/src/controller/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -12,6 +13,7 @@ import (
 
 func main() {
 
+	logger.Info("About to start the application")
 	//Carrega as variaveis de ambiente (env) para main
 	err := godotenv.Load()
 	if err != nil {
