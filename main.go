@@ -20,8 +20,8 @@ func main() {
 	fmt.Println(os.Getenv("TEST"))
 
 	// Inicializa o router, registra as rotas da aplicação e inicia o servidor na porta 8000
-	router := gin.Default()
-	routes.InitRoutes(&router.RouterGroup)
+	router := gin.Default()                //Vai registrar as rotas de aplicação recebida
+	routes.InitRoutes(&router.RouterGroup) // Pega a requisição HTTP do router e inicia
 	if err := router.Run(":8000"); err != nil {
 		log.Fatal(err)
 	}
