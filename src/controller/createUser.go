@@ -5,8 +5,8 @@ import (
 
 	"github.com/RafaelFleitas/API-Golang/src/configuration/logger"
 	"github.com/RafaelFleitas/API-Golang/src/configuration/validation"
-	"github.com/RafaelFleitas/API-Golang/src/model/request"
-	"github.com/RafaelFleitas/API-Golang/src/model/response"
+	"github.com/RafaelFleitas/API-Golang/src/controller/model/request"
+	"github.com/RafaelFleitas/API-Golang/src/controller/model/response"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )

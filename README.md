@@ -2,8 +2,11 @@
 
 Feito da seguinte forma
 
-Criação das pastas
+Criação na ordem:
 
-Criação da padronização de erros
-
-Criação das rotas
+das pastas
+da padronização de erros
+das rotas e controllers
+do model
+da validação de erros personalizada
+do logger
