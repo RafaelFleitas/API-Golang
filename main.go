@@ -1,10 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"os"
 
+	oraclesql "github.com/RafaelFleitas/API-Golang/src/configuration/database/oracleSQL"
 	"github.com/RafaelFleitas/API-Golang/src/configuration/logger"
 	"github.com/RafaelFleitas/API-Golang/src/controller"
 	"github.com/RafaelFleitas/API-Golang/src/controller/routes"
@@ -21,10 +20,14 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	fmt.Println(os.Getenv("TEST"))
+	//Inicializa o banco de dados ORACLE
+	db, err := oraclesql.InitConnection()
+	if err != nil {
+		log.Fatal("Error connecting to database: ", err)
+	}
+	defer db.Close()
 
 	// Inicializa o router, registra as rotas da aplicação e inicia o servidor na porta 8000
-
 	service := service.NewUserDomainService()
 	userController := controller.NewUserControllerInterface(service)
 
