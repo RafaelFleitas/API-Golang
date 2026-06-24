@@ -15,10 +15,10 @@ func main() {
 
 	logger.Info("About to start the application")
 	//Carrega as variaveis de ambiente (env) para main
-	err := godotenv.Load()
-	if err != nil {
+	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
 	fmt.Println(os.Getenv("TEST"))
 
 	// Inicializa o router, registra as rotas da aplicação e inicia o servidor na porta 8000
