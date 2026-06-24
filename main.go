@@ -28,6 +28,4 @@ func main() {
 		log.Fatal(err)
 	}
 
-	//Aqui eu não to alterando a branch main apenas um teste para ver
-
 }
