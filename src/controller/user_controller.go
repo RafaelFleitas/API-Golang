@@ -14,7 +14,6 @@ func NewUserControllerInterface(serviceInterface service.UserDomainService) User
 type UserControllerInterface interface {
 	FindUserByID(c *gin.Context)
 	FindUserByEmail(c *gin.Context)
-
 	CreateUser(c *gin.Context)
 	UpdateUser(c *gin.Context)
 	DeleteUser(c *gin.Context)

@@ -1,8 +1,6 @@
 package service
 
 import (
-	"fmt"
-
 	"github.com/RafaelFleitas/API-Golang/src/configuration/logger"
 	"github.com/RafaelFleitas/API-Golang/src/configuration/rest_err"
 	"github.com/RafaelFleitas/API-Golang/src/model"
@@ -17,7 +15,6 @@ func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) (m
 
 	// Criptografa a senha antes de passar para o repositório salvar no banco
 	userDomain.EncryptPassword()
-	fmt.Println(userDomain.GetPassword())
 
 	// Repassa para o repositório que vai executar o INSERT no Oracle
 	return ud.userRepository.CreateUser(userDomain)

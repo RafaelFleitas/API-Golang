@@ -7,13 +7,6 @@ import (
 	"github.com/RafaelFleitas/API-Golang/src/model"
 )
 
-// NewUserRepository recebe a conexão com o banco e devolve um repositório pronto para uso
-func NewUserRepository(database *sql.DB) UserRepository {
-	return &userRepository{
-		database,
-	}
-}
-
 // userRepository guarda a conexão com o banco. Todos os métodos de acesso ao banco ficam nessa struct.
 type userRepository struct {
 	databaseConnection *sql.DB
@@ -23,4 +16,11 @@ type userRepository struct {
 // Novos métodos (FindUser, UpdateUser, DeleteUser) serão adicionados aqui conforme forem implementados.
 type UserRepository interface {
 	CreateUser(model.UserDomainInterface) (model.UserDomainInterface, *rest_err.RestErr)
+}
+
+// NewUserRepository recebe a conexão com o banco e devolve um repositório pronto para uso
+func NewUserRepository(database *sql.DB) UserRepository {
+	return &userRepository{
+		database,
+	}
 }
