@@ -9,7 +9,7 @@ import (
 	_ "github.com/sijms/go-ora/v2"
 )
 
-func InitConnection() (*sql.DB, error) {
+func NewOracleConnection() (*sql.DB, error) {
 	host := os.Getenv("ORACLE_HOST")
 	port := os.Getenv("ORACLE_PORT")
 	user := os.Getenv("ORACLE_USER")

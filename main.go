@@ -21,7 +21,7 @@ func main() {
 	}
 
 	//Inicializa o banco de dados ORACLE
-	db, err := oraclesql.InitConnection()
+	db, err := oraclesql.NewOracleConnection()
 	if err != nil {
 		log.Fatal("Error connecting to database: ", err)
 	}
