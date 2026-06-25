@@ -7,6 +7,7 @@ import (
 	"github.com/RafaelFleitas/API-Golang/src/configuration/logger"
 	"github.com/RafaelFleitas/API-Golang/src/controller"
 	"github.com/RafaelFleitas/API-Golang/src/controller/routes"
+	"github.com/RafaelFleitas/API-Golang/src/model/repository"
 	"github.com/RafaelFleitas/API-Golang/src/model/service"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -28,7 +29,9 @@ func main() {
 	defer db.Close()
 
 	// Inicializa o router, registra as rotas da aplicação e inicia o servidor na porta 8000
-	service := service.NewUserDomainService()
+	userRepository := repository.NewUserRepository(db)
+	service := service.NewUserDomainService(userRepository)
+
 	userController := controller.NewUserControllerInterface(service)
 
 	router := gin.Default() //Vai registrar as rotas de aplicação recebida

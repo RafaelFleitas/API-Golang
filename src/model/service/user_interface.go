@@ -3,17 +3,24 @@ package service
 import (
 	"github.com/RafaelFleitas/API-Golang/src/configuration/rest_err"
 	"github.com/RafaelFleitas/API-Golang/src/model"
+	"github.com/RafaelFleitas/API-Golang/src/model/repository"
 )
 
-func NewUserDomainService() UserDomainService {
-	return &userDomainService{}
-}
-
+// userDomainService é a camada de serviço. Ela fica entre o controller e o repositório,
+// e é onde ficam as regras de negócio (ex: criptografar senha antes de salvar).
 type userDomainService struct {
+	userRepository repository.UserRepository
 }
 
+// NewUserDomainService recebe o repositório e devolve o serviço pronto para uso
+func NewUserDomainService(repository repository.UserRepository) UserDomainService {
+	return &userDomainService{repository}
+}
+
+// UserDomainService define quais operações de usuário existem na aplicação.
+// O controller só enxerga essa interface, nunca o repositório diretamente.
 type UserDomainService interface {
-	CreateUser(model.UserDomainInterface) *rest_err.RestErr
+	CreateUser(model.UserDomainInterface) (model.UserDomainInterface, *rest_err.RestErr)
 	UpdateUser(string, model.UserDomainInterface) *rest_err.RestErr
 	FindUser(string) (model.UserDomainInterface, *rest_err.RestErr)
 	DeleteUser(string) *rest_err.RestErr

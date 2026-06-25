@@ -4,25 +4,20 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// UserDomainInterface define o que um usuário precisa ter na aplicação.
+// Toda a aplicação usa essa interface — nunca a struct diretamente.
+// Isso protege os campos privados e facilita trocar a implementação no futuro.
 type UserDomainInterface interface {
 	GetEmail() string
-	GetPassword() string //
+	GetPassword() string
 	GetName() string
 	GetAge() int8
 
 	EncryptPassword()
 }
 
-// Cria um struct para receber os dados brutos
-// e retorna em formato UserDomainInterface
-
-func NewUserDomain(email, password, name string, age int8) UserDomainInterface {
-	return &userDomain{
-		email, password, name, age,
-	}
-}
-
-// Estrutura que armazena as informações do usuário
+// userDomain é a struct privada que guarda os dados do usuário.
+// Os campos são privados para que só sejam acessados pelos métodos abaixo.
 type userDomain struct {
 	email    string
 	password string
@@ -30,22 +25,23 @@ type userDomain struct {
 	age      int8
 }
 
-// Os métodos Getters servem como uma forma controlada de acessar os valores fora do pacote
-func (ud *userDomain) GetEmail() string {
-	return ud.email
-}
-func (ud *userDomain) GetPassword() string {
-	return ud.password
+// Getters — única forma de ler os dados do usuário fora desse pacote
+func (ud *userDomain) GetEmail() string    { return ud.email }
+func (ud *userDomain) GetPassword() string { return ud.password }
+func (ud *userDomain) GetName() string     { return ud.name }
+func (ud *userDomain) GetAge() int8        { return ud.age }
+
+// NewUserDomain é o construtor do usuário. Recebe os dados da requisição e devolve a interface.
+func NewUserDomain(email, password, name string, age int8) UserDomainInterface {
+	return &userDomain{
+		email:    email,
+		password: password,
+		name:     name,
+		age:      age,
+	}
 }
 
-func (ud *userDomain) GetName() string {
-	return ud.name
-}
-func (ud *userDomain) GetAge() int8 {
-	return ud.age
-}
-
-// Substitui a senha do usuário pelo hash gerado no bcrypt
+// EncryptPassword substitui a senha em texto puro pelo hash bcrypt antes de salvar no banco
 func (ud *userDomain) EncryptPassword() {
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(ud.password), bcrypt.DefaultCost)
 	ud.password = string(hashedPassword)

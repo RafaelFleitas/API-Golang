@@ -9,14 +9,16 @@ import (
 	"go.uber.org/zap"
 )
 
-func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) *rest_err.RestErr {
+func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) (model.UserDomainInterface, *rest_err.RestErr) {
 
 	logger.Info("Init CreateUser model",
 		zap.String("journey", "createUser"),
 	)
 
+	// Criptografa a senha antes de passar para o repositório salvar no banco
 	userDomain.EncryptPassword()
 	fmt.Println(userDomain.GetPassword())
 
-	return nil
+	// Repassa para o repositório que vai executar o INSERT no Oracle
+	return ud.userRepository.CreateUser(userDomain)
 }
