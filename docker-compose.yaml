@@ -9,7 +9,7 @@
         - "1521:1521"
       # Provide passwords and other environment variables to the container
       environment:
-        ORACLE_PASSWORD: root
+        ORACLE_PASSWORD: ${ORACLE_PASSWORD}
       # Customize healthcheck script options for startup
       healthcheck:
         test: ["CMD", "healthcheck.sh"]
