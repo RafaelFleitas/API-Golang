@@ -17,5 +17,17 @@ func (ud *userDomainService) CreateUserService(userDomain model.UserDomainInterf
 	userDomain.EncryptPassword()
 
 	// Repassa para o repositório que vai executar o INSERT no Oracle
-	return ud.userRepository.CreateUser(userDomain)
+	userDomainRepository, err := ud.userRepository.CreateUser(userDomain)
+
+	if err != nil {
+		logger.Error("Error trying to call user", err,
+			zap.String("journey", "createUser"),
+		)
+		return nil, err
+	}
+
+	logger.Info("CreateUser service executed successfully",
+		zap.String("journey", "createUser"))
+
+	return userDomainRepository, nil
 }

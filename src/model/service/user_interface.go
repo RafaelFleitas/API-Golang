@@ -21,7 +21,7 @@ func NewUserDomainService(repository repository.UserRepository) UserDomainServic
 // O controller só enxerga essa interface, nunca o repositório diretamente.
 type UserDomainService interface {
 	CreateUserService(model.UserDomainInterface) (model.UserDomainInterface, *rest_err.RestErr)
-	UpdateUser(string, model.UserDomainInterface) *rest_err.RestErr
+	UpdateUserService(userId int64, userDomain model.UserDomainInterface) (model.UserDomainInterface, *rest_err.RestErr)
 	FindUserByIdService(id int64) (model.UserDomainInterface, *rest_err.RestErr)
 	FindUserByEmailService(email string) (model.UserDomainInterface, *rest_err.RestErr)
 	DeleteUser(string) *rest_err.RestErr

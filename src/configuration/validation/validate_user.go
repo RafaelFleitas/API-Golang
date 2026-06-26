@@ -3,6 +3,7 @@ package validation
 import (
 	"encoding/json"
 	"errors"
+	"strings"
 
 	"github.com/RafaelFleitas/API-Golang/src/configuration/rest_err"
 	"github.com/gin-gonic/gin/binding"
@@ -30,6 +31,10 @@ func init() {
 		transl, _ = unt.GetTranslator("en")
 		// Registra as traduções padrão em inglês para o validador.
 		en_translation.RegisterDefaultTranslations(val, transl)
+
+		val.RegisterValidation("notblank", func(fl validator.FieldLevel) bool {
+			return strings.TrimSpace(fl.Field().String()) != ""
+		})
 
 	}
 }
