@@ -15,11 +15,15 @@ func ConvertDomainToEntity(domain model.UserDomainInterface) *entity.UserEntity 
 }
 
 func ConvertEntityToDomain(userEntity *entity.UserEntity) model.UserDomainInterface {
-	return model.NewUserDomain(
+	domain := model.NewUserDomain(
 		userEntity.Email,
 		userEntity.Password,
 		userEntity.Name,
 		userEntity.Age,
 	)
+
+	domain.SetID(userEntity.ID)
+
+	return domain
 
 }

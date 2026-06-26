@@ -1,10 +1,24 @@
 package service
 
 import (
+	"github.com/RafaelFleitas/API-Golang/src/configuration/logger"
 	"github.com/RafaelFleitas/API-Golang/src/configuration/rest_err"
 	"github.com/RafaelFleitas/API-Golang/src/model"
+	"go.uber.org/zap"
 )
 
-func (*userDomainService) FindUser(string) (model.UserDomainInterface, *rest_err.RestErr) {
-	return nil, nil
+func (ud *userDomainService) FindUserByIdService(id int64) (model.UserDomainInterface, *rest_err.RestErr) {
+	logger.Info("Init FindUserByIdService services",
+		zap.String("journey", "FindUserById"),
+	)
+
+	return ud.userRepository.FindUserById(id)
+}
+
+func (ud *userDomainService) FindUserByEmailService(email string) (model.UserDomainInterface, *rest_err.RestErr) {
+	logger.Info("Init FindUserByeMAILService services",
+		zap.String("journey", "FindUserById"),
+	)
+
+	return ud.userRepository.FindUserByEmail(email)
 }

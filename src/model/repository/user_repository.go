@@ -16,6 +16,8 @@ type userRepository struct {
 // Novos métodos (FindUser, UpdateUser, DeleteUser) serão adicionados aqui conforme forem implementados.
 type UserRepository interface {
 	CreateUser(model.UserDomainInterface) (model.UserDomainInterface, *rest_err.RestErr)
+	FindUserById(id int64) (model.UserDomainInterface, *rest_err.RestErr)
+	FindUserByEmail(email string) (model.UserDomainInterface, *rest_err.RestErr)
 }
 
 // NewUserRepository recebe a conexão com o banco e devolve um repositório pronto para uso
