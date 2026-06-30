@@ -13,10 +13,7 @@ import (
 func main() {
 
 	logger.Info("About to start the application")
-	//Carrega as variaveis de ambiente (env) para main
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	godotenv.Load()
 
 	//Inicializa o banco de dados ORACLE
 	db, err := oraclesql.NewOracleConnection()

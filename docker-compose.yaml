@@ -1,20 +1,30 @@
-  version: "3.8"
-  services:
-    # Name of the Docker Compose service
-    oracle:
-      # Docker Hub image (feel free to change the tag "latest" to any other available one)
-      image: gvenzl/oracle-free:latest
-      # Forward Oracle port to localhost
-      ports:
-        - "1521:1521"
-      # Provide passwords and other environment variables to the container
-      environment:
-        ORACLE_PASSWORD: ${ORACLE_PASSWORD}
-      # Customize healthcheck script options for startup
-      healthcheck:
-        test: ["CMD", "healthcheck.sh"]
-        interval: 10s
-        timeout: 5s
-        retries: 10
-        start_period: 5s
-        start_interval: 5s
+version: "3.8"
+
+services:
+  meuprimeirocrudgo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      ORACLE_URL: ${ORACLE_URL}
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+    ports:
+      - "8000:8000"
+    depends_on:
+      oracle:
+        condition: service_healthy
+
+  oracle:
+    image: gvenzl/oracle-free:latest
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+      start_interval: 5s
