@@ -17,7 +17,7 @@ func (ud *userDomainService) CreateUserService(userDomain model.UserDomainInterf
 	userDomain.EncryptPassword()
 
 	// Repassa para o repositório que vai executar o INSERT no Oracle
-	userDomainRepository, err := ud.userRepository.CreateUser(userDomain)
+	userDomainRepository, err := ud.userRepository.CreateUserRepository(userDomain)
 
 	if err != nil {
 		logger.Error("Error trying to call user", err,

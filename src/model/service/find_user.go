@@ -12,7 +12,7 @@ func (ud *userDomainService) FindUserByIdService(id int64) (model.UserDomainInte
 		zap.String("journey", "FindUserById"),
 	)
 
-	return ud.userRepository.FindUserById(id)
+	return ud.userRepository.FindUserByIdRepository(id)
 }
 
 func (ud *userDomainService) FindUserByEmailService(email string) (model.UserDomainInterface, *rest_err.RestErr) {
@@ -20,5 +20,5 @@ func (ud *userDomainService) FindUserByEmailService(email string) (model.UserDom
 		zap.String("journey", "FindUserById"),
 	)
 
-	return ud.userRepository.FindUserByEmail(email)
+	return ud.userRepository.FindUserByEmailRepository(email)
 }

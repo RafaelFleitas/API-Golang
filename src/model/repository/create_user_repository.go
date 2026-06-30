@@ -9,7 +9,7 @@ import (
 	go_ora "github.com/sijms/go-ora/v2"
 )
 
-func (ur *userRepository) CreateUser(
+func (ur *userRepository) CreateUserRepository(
 	userDomain model.UserDomainInterface,
 ) (model.UserDomainInterface, *rest_err.RestErr) {
 

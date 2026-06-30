@@ -12,7 +12,7 @@ func (ud *userDomainService) UpdateUserService(userId int64, userDomain model.Us
 		zap.String("journey", "UpdateUserService"),
 	)
 
-	err := ud.userRepository.UpdateUser(userId, userDomain)
+	err := ud.userRepository.UpdateUserRepository(userId, userDomain)
 
 	if err != nil {
 		logger.Error("Error trying to call user", err,
@@ -21,7 +21,7 @@ func (ud *userDomainService) UpdateUserService(userId int64, userDomain model.Us
 		return nil, err
 	}
 
-	updatedUser, err := ud.userRepository.FindUserById(userId)
+	updatedUser, err := ud.userRepository.FindUserByIdRepository(userId)
 
 	if err != nil {
 		logger.Error("Error trying to find updated user", err,

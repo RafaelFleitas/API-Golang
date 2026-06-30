@@ -5,20 +5,15 @@ import (
 
 	"github.com/RafaelFleitas/API-Golang/src/configuration/logger"
 	"github.com/RafaelFleitas/API-Golang/src/configuration/rest_err"
-	"github.com/RafaelFleitas/API-Golang/src/model"
 )
 
-func (ur *userRepository) UpdateUserRepository(
-	userId int64, userDomain model.UserDomainInterface,
-) *rest_err.RestErr {
+func (ur *userRepository) DeleteUserRepository(userId int64) *rest_err.RestErr {
 
-	logger.Info("Init updateUser repository")
+	logger.Info("Init deleteUser repository")
 
 	_, err := ur.databaseConnection.ExecContext(
 		context.Background(),
-		"UPDATE users SET name = :1, age = :2 WHERE id = :3",
-		userDomain.GetName(),
-		userDomain.GetAge(),
+		"DELETE FROM users WHERE id = :1",
 		userId,
 	)
 

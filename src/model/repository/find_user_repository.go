@@ -12,7 +12,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (ur *userRepository) FindUserByEmail(email string) (model.UserDomainInterface, *rest_err.RestErr) {
+func (ur *userRepository) FindUserByEmailRepository(email string) (model.UserDomainInterface, *rest_err.RestErr) {
 	logger.Info("Init FindByEmail user repository")
 
 	row := ur.databaseConnection.QueryRowContext(
@@ -41,7 +41,7 @@ func (ur *userRepository) FindUserByEmail(email string) (model.UserDomainInterfa
 
 }
 
-func (ur *userRepository) FindUserById(id int64) (model.UserDomainInterface, *rest_err.RestErr) {
+func (ur *userRepository) FindUserByIdRepository(id int64) (model.UserDomainInterface, *rest_err.RestErr) {
 	logger.Info("Init FindById user repository")
 
 	row := ur.databaseConnection.QueryRowContext(
