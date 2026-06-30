@@ -13,6 +13,12 @@ func (ud *userDomainService) CreateUserService(userDomain model.UserDomainInterf
 		zap.String("journey", "createUser"),
 	)
 
+	//Verifica se o email já está sendo utilizado por outra conta
+	user, _ := ud.FindUserByEmailService(userDomain.GetEmail())
+	if user != nil {
+		return nil, rest_err.NewBadRequestError("User email already exists")
+	}
+
 	// Criptografa a senha antes de passar para o repositório salvar no banco
 	userDomain.EncryptPassword()
 

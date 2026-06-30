@@ -10,6 +10,7 @@ import (
 	"github.com/RafaelFleitas/API-Golang/src/model/repository/entity"
 	"github.com/RafaelFleitas/API-Golang/src/model/repository/entity/converter"
 	"go.uber.org/zap"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (ur *userRepository) FindUserByEmailRepository(email string) (model.UserDomainInterface, *rest_err.RestErr) {
@@ -42,7 +43,7 @@ func (ur *userRepository) FindUserByEmailRepository(email string) (model.UserDom
 }
 
 func (ur *userRepository) FindUserByIdRepository(id int64) (model.UserDomainInterface, *rest_err.RestErr) {
-	logger.Info("Init FindById user repository")
+	logger.Info("Init FindUserById user repository")
 
 	row := ur.databaseConnection.QueryRowContext(
 		context.Background(),
@@ -65,6 +66,39 @@ func (ur *userRepository) FindUserByIdRepository(id int64) (model.UserDomainInte
 	logger.Info("FindUserByEmail repository executed successfully",
 		zap.String("journey", "FindUserById"),
 		zap.Int64("ID: ", id))
+
+	return converter.ConvertEntityToDomain(userEntity), nil
+
+}
+
+func (ur *userRepository) FindUserByEmailAndPasswordRepository(email, password string) (model.UserDomainInterface, *rest_err.RestErr) {
+	logger.Info("Init FindByEmailAndPassword user repository")
+
+	row := ur.databaseConnection.QueryRowContext(
+		context.Background(),
+		"SELECT id, name, email, password, age FROM users WHERE email = :1",
+		email,
+	)
+
+	userEntity := &entity.UserEntity{}
+
+	err := row.Scan(&userEntity.ID, &userEntity.Name, &userEntity.Email, &userEntity.Password, &userEntity.Age)
+
+	if err != nil {
+		logger.Error("Error trying to find user by email and password", err)
+		if err == sql.ErrNoRows {
+			return nil, rest_err.NewForbiddenError("User or password is invalid")
+		}
+		return nil, rest_err.NewInternalServerError("Error trying to find user by email and password")
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(userEntity.Password), []byte(password)); err != nil {
+		return nil, rest_err.NewForbiddenError("User or password is invalid")
+	}
+
+	logger.Info("FindByEmailAndPassword repository executed successfully",
+		zap.String("journey", "FindByEmailAndPassword"),
+		zap.String("email: ", email))
 
 	return converter.ConvertEntityToDomain(userEntity), nil
 
