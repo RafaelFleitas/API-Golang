@@ -1,12 +1,14 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"net/mail"
 	"strconv"
 
 	"github.com/RafaelFleitas/API-Golang/src/configuration/logger"
 	"github.com/RafaelFleitas/API-Golang/src/configuration/rest_err"
+	"github.com/RafaelFleitas/API-Golang/src/model"
 	"github.com/RafaelFleitas/API-Golang/src/view"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -18,6 +20,15 @@ func (uc *userControllerInterface) FindUserByID(c *gin.Context) {
 	logger.Info("Init FindUserByIdController",
 		zap.String("journey", "FindUserById"),
 	)
+
+	user, err := model.VerifyToken(c.GetHeader("Authorization"))
+
+	if err != nil {
+		c.JSON(err.Code, err)
+		return
+	}
+
+	logger.Info(fmt.Sprintf("User authenticated: %#v", user))
 
 	userId := c.Param("userId")
 	userIdInt, parseErr := strconv.ParseInt(userId, 10, 64)
@@ -51,6 +62,15 @@ func (uc *userControllerInterface) FindUserByEmail(c *gin.Context) {
 	logger.Info("Init FindUserByEmailController",
 		zap.String("journey", "FindUserById"),
 	)
+
+	user, err := model.VerifyToken(c.GetHeader("Authorization"))
+
+	if err != nil {
+		c.JSON(err.Code, err)
+		return
+	}
+
+	logger.Info(fmt.Sprintf("User authenticated: %#v", user))
 
 	userEmail := c.Param("userEmail")
 

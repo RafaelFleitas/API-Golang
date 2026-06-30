@@ -39,6 +39,14 @@ func NewBadRequestError(message string) *RestErr {
 	}
 }
 
+func NewUnauthorizedRequestError(message string) *RestErr {
+	return &RestErr{
+		Message: message,
+		Err:     "unauthorized",
+		Code:    http.StatusUnauthorized,
+	}
+}
+
 // NewBadRequestValidationError cria um erro padronizado para falhas de validação.
 func NewBadRequestValidationError(message string, causes []Causes) *RestErr {
 	return &RestErr{
